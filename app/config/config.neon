@@ -22,7 +22,6 @@ database:
 	options:
 		lazy: yes
 
-
 services:
 	- App\Model\UserManager
 	- App\Forms\FormFactory

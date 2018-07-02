@@ -33,7 +33,6 @@ class SignPresenter extends BasePresenter
 		});
 	}
 
-
 	/**
 	 * Sign-up form factory.
 	 * @return Form
@@ -49,5 +48,6 @@ class SignPresenter extends BasePresenter
 	public function actionOut()
 	{
 		$this->getUser()->logout();
+                                   $this->redirect('Homepage:');
 	}
 }

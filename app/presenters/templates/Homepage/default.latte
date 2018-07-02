@@ -7,7 +7,9 @@
                         <th>Datum odevzdání</th>
                         <th>Typ</th>
                         <th>Webový projekt</th>
+                        {if $loggedin}
                         <th>Akce</th>
+                        {/if}
                     </tr>
                     {foreach $projects as $project}
                     <tr>
@@ -17,13 +19,14 @@
                             {date("d.m Y", strtotime($project->date))}
                         </td>
                         <td>{$project->type}</td>
-                        <td>
-                            {$project->is_web}
+                        <td>{if $project->is_web==0}Ne{else}Ano{/if}
                         </td>
+                        {if $loggedin}
                         <td>
                             <a n:href="Homepage:edit $project->id" class="btn btn-dark btn-sm">✎ Upravit</a>
                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete{$project->id}">✘ Smazat</button>
                         </td>
+                        {/if}
                     </tr>
                     <div class="modal fade" id="delete{$project->id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -46,5 +49,11 @@
                      </div> 
                     {/foreach}
                 </table>
+                {if $loggedin}
                     <a n:href="Homepage:create" class="btn btn-dark btn-sm">Vytvořit projekt</a>
+                    <a n:href="Sign:out" class="btn btn-dark btn-sm">Odhlásit se</a>
+                {else}
+                    <a n:href="Sign:in" class="btn btn-dark btn-sm">Přihlásit se</a>
+                {/if}
+                <a n:href="Sign:up" class="btn btn-dark btn-sm">Registrovat se</a>
 {/block}

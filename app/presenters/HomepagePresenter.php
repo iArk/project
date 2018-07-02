@@ -14,6 +14,11 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
     
                 public function renderDefault()
                 {
+                    if (!$this->getUser()->isLoggedIn()) {
+                        $this->template->loggedin = FALSE;
+                    } else {
+                        $this->template->loggedin = TRUE;
+                    }
                     $this->template->projects = $this->baseModel->getProjects();
                 }
                 
@@ -28,7 +33,7 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
                     }
                 }
                 
-                public function renderCreate($id){
+                public function renderCreate(){
                 }
                 
                 public function createComponentEditProject(){
@@ -38,11 +43,11 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
                     $projects = $this->baseModel->getProject($id); 
                     foreach ($projects as $project) {
                         $form->addText("name","Název projektu")
-                             ->setRequired()
+                             ->setRequired("Zadejte název projektu")
                              ->setDefaultValue($project->name);
                         $form->addText("date","Datum odevzdání projektu")
                                  ->setHtmlType("date")
-                                 ->setRequired()
+                                 ->setRequired("Zadejte datum")
                                  ->setDefaultValue($project->date);
                         $form->addSelect('type', 'Typ',[
                                 'Časově omezený projekt' => 'Časově omezený projekt',
@@ -67,10 +72,10 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
                         $form = new Nette\Application\UI\Form;
                     
                         $form->addText("name","Název projektu")
-                             ->setRequired();
+                             ->setRequired("Zadejte název projektu");
                         $form->addText("date","Datum odevzdání projektu")
                                  ->setHtmlType("date")
-                                 ->setRequired();
+                                 ->setRequired("Zadejte datum");
                         $form->addSelect('type', 'Typ',[
                                 'Časově omezený projekt' => 'Časově omezený projekt',
                                 'Continuous Integration' => 'Continuous Integration', 
