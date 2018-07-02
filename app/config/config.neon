@@ -16,8 +16,8 @@ session:
 
 
 database:
-	dsn: 'mysql:host=localhost;dbname=projekt1'
-	user: root
+	dsn: 
+	user:
 	password:
 	options:
 		lazy: yes
