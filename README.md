@@ -1,1 +1,1 @@
-# project
+Projekt pro RTSoft
