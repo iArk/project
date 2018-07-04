@@ -31,7 +31,7 @@ class SignInFormFactory
 	public function create(callable $onSuccess)
 	{
 		$form = $this->factory->create();
-		$form->addText('username', 'Uživatelské jméno:')
+		$form->addText('username', 'Uživatelské jméno')
 			->setRequired('Vyplňte prosím jméno');
 
 		$form->addPassword('password', 'Heslo')
