@@ -14,11 +14,6 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
     
                 public function renderDefault()
                 {
-                    if (!$this->getUser()->isLoggedIn()) {
-                        $this->template->loggedin = FALSE;
-                    } else {
-                        $this->template->loggedin = TRUE;
-                    }
                     $this->template->projects = $this->baseModel->getProjects();
                 }
                 
