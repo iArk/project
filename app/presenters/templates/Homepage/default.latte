@@ -13,23 +13,26 @@
                         {/if}
                     </tr>
                     {foreach $projects as $project}
-                    <tr>
-                        <td>{$project->id}</td>
-                        <td>{$project->name}</td>
+                    <tr {if $user->isLoggedIn()}
+                            {if $project['isFavourite']} class="bg-success" {/if}
+                          {/if}
+                        >
+                        <td>{$project['id']}</td>
+                        <td>{$project['name']}</td>
                         <td>
-                            {date("d.m Y", strtotime($project->date))}
+                            {date("d.m Y", strtotime($project[date]))}
                         </td>
-                        <td>{$project->type}</td>
-                        <td>{if $project->is_web==0}Ne{else}Ano{/if}
+                        <td>{$project['type']}</td>
+                        <td>{if $project['is_web']==0}Ne{else}Ano{/if}
                         </td>
                         {if $user->isLoggedIn()}
                         <td>
-                            <a n:href="Homepage:edit $project->id" class="btn btn-dark btn-sm">✎ Upravit</a>
-                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete{$project->id}">✘ Smazat</button>
+                            <a n:href="Homepage:edit $project['id']" class="btn btn-dark btn-sm">✎ Upravit</a>
+                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete{$project['id']}">✘ Smazat</button>
                         </td>
                         {/if}
                     </tr>
-                    <div class="modal fade" id="delete{$project->id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="delete{$project['id']}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -39,15 +42,16 @@
                               </button>
                             </div>
                             <div class="modal-body">
-                                Projekt {$project->name} (ID: {$project->id})
+                                Projekt {$project['name']} (ID: {$project['id']})
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Zrušit</button>
-                              <a n:href="Homepage:delete $project->id" class="btn btn-danger">Smazat</a>
+                              <a n:href="Homepage:delete $project['id']" class="btn btn-danger">Smazat</a>
                             </div>
                           </div>
                         </div>
                      </div> 
                     {/foreach}
                 </table>
+</a> 
 {/block}

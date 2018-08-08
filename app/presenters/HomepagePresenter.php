@@ -14,21 +14,42 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
     
                 public function renderDefault()
                 {
-                    $this->template->projects = $this->baseModel->getProjects();
-                }
-                
-                public function actionDelete($id){
-                    $this->baseModel->deleteProject($id);
-                    $this->redirect('Homepage:default');
-                }
-                
-                public function renderEdit($id){
-                    if ($this->baseModel->checkIfValid($id)) {
-                     $this->error('Stránka nebyla nalezena');  
+                    if ($this->getUser()->isLoggedIn()){
+                        $this->template->projects = $this->baseModel->getProjects($this->getUser()->getId());
+                    } else {
+                        $this->template->projects = $this->baseModel->getProjects(FALSE);
                     }
                 }
                 
+                public function actionDelete($id){
+                    if ($this->getUser()->isLoggedIn()){
+                        $this->baseModel->deleteProject($id);
+                        $this->redirect('Homepage:default');
+                    } else {
+                        $this->error("Pro mazání projektu se musíte přihlásit");
+                        $this->redirect('Homepage:default');
+                    }
+                    
+                }
+                
+                public function renderEdit($id){
+                    if ($this->getUser()->isLoggedIn()){
+                        if ($this->baseModel->checkIfValid($id)) {
+                        $this->error('Stránka nebyla nalezena');  
+                       }
+                    } else {
+                        $this->flashMessage("Pro editaci projektu se musíte přihlásit");
+                        $this->redirect('Homepage:default');
+                    }
+                    
+                }
+                
                 public function renderCreate(){
+                    if ($this->getUser()->isLoggedIn()){
+                    } else {
+                        $this->flashMessage("Pro vytvoření projektu se musíte přihlásit");
+                        $this->redirect('Homepage:default');
+                    }
                 }
                 
                 public function createComponentEditProject(){
